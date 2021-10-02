@@ -1,0 +1,14 @@
+{
+  "baseUrl": "http://automationpractice.com/",
+  "video": true,
+  "viewportWidth": 1920,
+  "viewportHeight": 1080,
+  "reporter": "mochawesome",
+  "projectId": "k11xny",
+  "reporterOptions": {
+    "html": false,
+    "json": true,
+    "overwrite": true,
+    "timestamp": "mmddyyyy_HHMMss"
+  }
+}
