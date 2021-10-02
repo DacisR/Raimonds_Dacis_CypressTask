@@ -1,7 +1,11 @@
-describe('Automation test cases for final task', () => {
-    const email = 'Testing' + Math.floor((Math.random() * 100000)) + '@testing.com';
+import {LoginPage} from "../pageObjects/loginPage";
+import {RegistrationPage} from "../pageObjects/registrationPage";
 
-    it('Create a new user', () => {
+describe('Automation test cases for final task', () => {
+    const email = 'Testing' + Math.floor((Math.random() * 100000)) + '@testing.com'
+    const password = 'Qwerty123$%^'
+
+    it.only('Create a new user', () => {
         cy.visit('https://lv.sportsdirect.com/')
         cy.get('#divSignIn')
             .should('be.visible')
@@ -10,31 +14,9 @@ describe('Automation test cases for final task', () => {
             .should('be.visible')
         cy.get('[href="/registration?returnUrl=%2f"]')
             .click()
-        cy.get('#RegistrationForm')
-            .should('be.visible')
-        cy.get('#Registration_FirstName')
-            .type('Tester')
-        cy.get('#Registration_LastName')
-            .type('Testing')
-        cy.get('#Registration_EmailAddress')
-            .type(email)
-        cy.get('#Registration_DateOfBirthDay')
-            .select('1')
-            .should('have.value', '1')
-        cy.get('#Registration_DateOfBirthMonth')
-            .select('1')
-            .should('have.value', '1')
-        cy.get('#Registration_DateOfBirthYear')
-            .select('1990')
-            .should('have.value', '1990')
-        cy.get('#txtPassword')
-            .type('Qwerty123$%^')
-        cy.get('#Registration_ConfirmPassword')
-            .type('Qwerty123$%^')
-        cy.get('#Registration_IsSubscriber')
-            .check()
-        cy.get('#RegistrationSubmit')
-            .click()
+        RegistrationPage.registrationFormVisibility()
+        RegistrationPage.fillRegistrationForm(email, password)
+        RegistrationPage.submitRegistrationForm()
     })
 
     it('Logging in with a registered user', () => {
@@ -42,26 +24,13 @@ describe('Automation test cases for final task', () => {
         cy.get('#divSignIn')
             .should('be.visible')
             .click()
-        cy.get('#login')
-            .should('be.visible')
-        cy.get('#Login_EmailAddress')
-            .type(email)
-        cy.get('#Login_Password')
-            .type('Qwerty123$%^')
-        cy.get('#LoginButton')
-            .click()
-        cy.get('#divAccount')
-            .should('be.visible')
-            .click()
-        cy.get('#accountHeader')
-            .should('be.visible')
-        cy.get('#accountHeader')
-            .children()
-            .children('h1')
-            .should('have.text', 'Account Details')
+        LoginPage.loginFormVisibility()
+        LoginPage.fillLoginForm(email, password)
+        LoginPage.clickLoginButton()
+        LoginPage.checkAccountInformation()
     })
 
-    it.only('"Please complete card details" error during checkout as a guest user', () => {
+    it('"Please complete card details" error during checkout as a guest user', () => {
         cy.visit('https://lv.sportsdirect.com/basketball/basketball-shoes')
         cy.get('#ProductContainer')
             .should('be.visible')
