@@ -30,4 +30,8 @@ export class RegistrationPage {
     static registrationFormVisibility() {
         return cy.get('#RegistrationForm').should('be.visible')
     }
+
+    static clickRegisterButton() {
+        return cy.get('[href="/registration?returnUrl=%2f"]').click()
+    }
 }
